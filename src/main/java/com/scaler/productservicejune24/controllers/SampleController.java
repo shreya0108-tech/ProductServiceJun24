@@ -5,11 +5,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
-@RequestMapping("say")
+@RestController     // this makes sure that the class will be hosting HTTP APIs
+@RequestMapping("say")      //sets an address for the class
 public class SampleController {
 
-    @GetMapping("/hello/{name}/{times}")
+    @GetMapping("/hello/{name}/{times}")        //sets an address for a method / API where data is read
     public String sayHello(@PathVariable("name") String name, @PathVariable("times") int times)
     {
         String out = "";
@@ -19,7 +19,7 @@ public class SampleController {
         return out;
     }
 
-    @GetMapping("/bye/{age}")
+    @GetMapping("/bye/{age}")   //sets an address for a method / API where data is read
     public String sayBye(@PathVariable int age)
     {
         return "Bye"+" "+age;
