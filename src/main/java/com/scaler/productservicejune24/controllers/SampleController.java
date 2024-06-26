@@ -9,7 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("say")      //sets an address for the class
 public class SampleController {
 
-    @GetMapping("/hello/{name}/{times}")        //sets an address for a method / API where data is read
+    @GetMapping("/hello/{name}/{times}")        //sets an address for a method / API where
+    // data is read for multiple inputs, here we need to specify in the signature which input will go where.
     public String sayHello(@PathVariable("name") String name, @PathVariable("times") int times)
     {
         String out = "";
@@ -19,7 +20,7 @@ public class SampleController {
         return out;
     }
 
-    @GetMapping("/bye/{age}")   //sets an address for a method / API where data is read
+    @GetMapping("/bye/{age}")   //sets an address for a method / API where data is read for 1 input
     public String sayBye(@PathVariable int age)
     {
         return "Bye"+" "+age;
