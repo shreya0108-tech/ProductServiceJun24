@@ -6,9 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Product extends BaseModel{
-    //private int id;
-    private String name;
+    //private long id;
+    private String titles;
     private double price;
-    private int quantity;
+    private String description;
     private Category category;
+    private String label;
 }
