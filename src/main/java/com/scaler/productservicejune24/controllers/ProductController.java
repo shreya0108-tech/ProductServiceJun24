@@ -1,13 +1,15 @@
 package com.scaler.productservicejune24.controllers;
 
 import com.scaler.productservicejune24.Models.Product;
+import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import com.scaler.productservicejune24.services.FakeStoreService;
 import com.scaler.productservicejune24.services.ProductService;
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
 import java.sql.Array;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,10 +25,23 @@ public class ProductController {
     }
     //http://localhost:8080/product/1
     @GetMapping("/{id}")
-    public Product getProductbyId(@PathVariable("id") Long id)
-    {
-        return productService.getSingleProduct(id);
-        //return fakeStoreService.getSingleProduct(id);
+    public ResponseEntity<Product> getProductbyId(@PathVariable("id") Long id) throws ProductNotFoundException {
+        //throw new RuntimeException("Something went wrong");
+        /*ResponseEntity<Product> resp = null;
+        try {
+            Product product = productService.getSingleProduct(id);
+            resp = new ResponseEntity<>(
+                    product,
+                    HttpStatus.OK);
+        }
+        catch(RuntimeException ex) {
+            resp = new ResponseEntity<>(
+                    HttpStatus.NOT_FOUND);      //here no need to pass service call
+        }*/
+        ResponseEntity<Product> resp = null;
+        Product product = productService.getSingleProduct(id);
+        resp = new ResponseEntity<>(product, HttpStatus.OK);
+        return resp;
     }
 
     @GetMapping()
@@ -34,5 +49,31 @@ public class ProductController {
     {
         return productService.getAllProduct();
         //return fakeStoreService.getAllProduct();
+    }
+
+    //http://localhost:8080/product/1
+    @PatchMapping("/{id}")
+    public Product updateProduct(@PathVariable("id") int id, @RequestBody Product product)
+    {
+        return updateProduct(id,product);
+    }
+
+    //http://localhost:8080/product/1
+    @PutMapping("/{id}")
+    public Product replaceProduct(@PathVariable int id, @RequestBody Product product)
+    {
+        return replaceProduct(id,product);
+    }
+
+    //if we want to handle the exception using exception handler, we can do it in the
+    //controller also.
+    @ExceptionHandler(ArrayIndexOutOfBoundsException.class)
+    public ResponseEntity<String> handleArrayOutBounds()
+    {
+        ResponseEntity<String> resp = new ResponseEntity<>(
+                "Array Out of Bounds Exception",
+                HttpStatus.BAD_REQUEST
+        );
+        return resp;
     }
 }
