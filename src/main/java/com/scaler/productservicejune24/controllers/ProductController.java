@@ -1,6 +1,7 @@
 package com.scaler.productservicejune24.controllers;
 
 import com.scaler.productservicejune24.Models.Product;
+import com.scaler.productservicejune24.dtos.FakeStoreDTO;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import com.scaler.productservicejune24.services.FakeStoreService;
 import com.scaler.productservicejune24.services.ProductService;
@@ -53,7 +54,7 @@ public class ProductController {
 
     //http://localhost:8080/product/1
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") int id, @RequestBody Product product)
+    public Product updateProduct(@PathVariable("id") int id, @RequestBody FakeStoreDTO product)
     {
         return updateProduct(id,product);
     }

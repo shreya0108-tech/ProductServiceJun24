@@ -6,6 +6,7 @@ import com.scaler.productservicejune24.configurations.ApplicationConfig;
 import com.scaler.productservicejune24.dtos.FakeStoreDTO;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
@@ -55,21 +56,31 @@ public class FakeStoreService implements  ProductService{
         return products;
     }
 
-    @Override
-    public Product updateProduct(Long id, Product product) {
-        RequestCallback requestCallback = restTemplate.httpEntityCallback(product, FakeStoreDTO.class);
-        HttpMessageConverterExtractor<FakeStoreDTO> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDTO.class, restTemplate.getMessageConverters());
-        FakeStoreDTO fakeStoreDTO = restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PATCH, requestCallback, responseExtractor);
-        return convertFakeStoreToProduct(fakeStoreDTO);
-    }
+//    @Override
+//    public Product updateProduct(Long id, Product product) {
+//        RequestCallback requestCallback = restTemplate.httpEntityCallback(product, FakeStoreDTO.class);
+//
+//        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+//        restTemplate.setRequestFactory(requestFactory);
+//
+//        HttpMessageConverterExtractor<FakeStoreDTO> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDTO.class, restTemplate.getMessageConverters());
+//        FakeStoreDTO fakeStoreDTO = restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PATCH, requestCallback, responseExtractor);
+//        return convertFakeStoreToProduct(fakeStoreDTO);
+//    }
 
-    @Override
-    public Product replaceProduct(Long id, Product product) {
-        RequestCallback requestCallback = restTemplate.httpEntityCallback(product);
-        FakeStoreDTO fakeStoreDTO = (FakeStoreDTO) restTemplate.execute("https://fakestoreapi.com/products/"+id,
-                HttpMethod.PUT, requestCallback, (ResponseExtractor)null);
-        return convertFakeStoreToProduct(fakeStoreDTO);
-    }
+//    @Override
+//    public Product replaceProduct(Long id, Product product) {
+//        FakeStoreDTO fakeStoreDTO = new FakeStoreDTO();
+//        fakeStoreDTO.setTitle(product.getTitles());
+//        fakeStoreDTO.setDescription(product.getDescription());
+//        fakeStoreDTO.setPrice(product.getPrice());
+//        fakeStoreDTO.setCategory(product.getCategory());
+//        RequestCallback requestCallback = restTemplate.httpEntityCallback(fakeStoreDTO, FakeStoreDTO.class);
+//        HttpMessageConverterExtractor<FakeStoreDTO> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDTO.class, restTemplate.getMessageConverters());
+//        FakeStoreDTO response = (FakeStoreDTO) restTemplate.execute("https://fakestoreapi.com/products/"+id,
+//                HttpMethod.PUT, requestCallback, responseExtractor);
+//        return convertFakeStoreToProduct(response);
+//    }
 
     Product convertFakeStoreToProduct(FakeStoreDTO fakeStoreDTO)
     {
