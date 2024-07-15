@@ -12,3 +12,9 @@ public class BaseModel {
     @GeneratedValue(strategy = GenerationType.IDENTITY)     //auto-increment
     private long id;
 }
+
+/*
+* In this, there is no table created for parent class, and the child tables are only
+* created. The child table will have its own attributes and the attributes of the
+* parent class.
+*/

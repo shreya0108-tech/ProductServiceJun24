@@ -19,3 +19,9 @@ public class User {
     private String name;
     private String email;
 }
+
+/* Single table creates only one table with all the attributes of the class. One thing to
+note here is that, here we have a discriminator column that tells us what is the
+user_type. To get it, we define the user_type values as well (same as enum),
+We define the discriminator column, its type and also the discriminator value. The
+value can be an integer or a string */

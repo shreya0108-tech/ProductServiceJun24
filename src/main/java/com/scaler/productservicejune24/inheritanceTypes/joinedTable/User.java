@@ -17,3 +17,9 @@ public class User {
     private String name;
     private String email;
 }
+
+/*
+* In Joined table, parent class will have its attributes and child class will have
+* different attributes, now the child table will be having the parent table attributes
+* as well but they will be referred via Foreign Key by the child class.
+* */
