@@ -8,6 +8,7 @@ import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.client.HttpMessageConverterExtractor;
 import org.springframework.web.client.RequestCallback;
 import org.springframework.web.client.ResponseExtractor;
@@ -16,7 +17,7 @@ import org.springframework.web.client.RestTemplate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakeStoreService")
 public class FakeStoreService implements  ProductService{
 
     RestTemplate restTemplate;
@@ -56,8 +57,8 @@ public class FakeStoreService implements  ProductService{
         return products;
     }
 
-//    @Override
-//    public Product updateProduct(Long id, Product product) {
+    @Override
+    public Product updateProduct(Long id, Product product) {
 //        RequestCallback requestCallback = restTemplate.httpEntityCallback(product, FakeStoreDTO.class);
 //
 //        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
@@ -66,10 +67,11 @@ public class FakeStoreService implements  ProductService{
 //        HttpMessageConverterExtractor<FakeStoreDTO> responseExtractor = new HttpMessageConverterExtractor(FakeStoreDTO.class, restTemplate.getMessageConverters());
 //        FakeStoreDTO fakeStoreDTO = restTemplate.execute("https://fakestoreapi.com/products/"+id, HttpMethod.PATCH, requestCallback, responseExtractor);
 //        return convertFakeStoreToProduct(fakeStoreDTO);
-//    }
+        return new Product();
+    }
 
-//    @Override
-//    public Product replaceProduct(Long id, Product product) {
+    @Override
+    public Product replaceProduct(Long id, Product product) {
 //        FakeStoreDTO fakeStoreDTO = new FakeStoreDTO();
 //        fakeStoreDTO.setTitle(product.getTitles());
 //        fakeStoreDTO.setDescription(product.getDescription());
@@ -80,7 +82,18 @@ public class FakeStoreService implements  ProductService{
 //        FakeStoreDTO response = (FakeStoreDTO) restTemplate.execute("https://fakestoreapi.com/products/"+id,
 //                HttpMethod.PUT, requestCallback, responseExtractor);
 //        return convertFakeStoreToProduct(response);
-//    }
+        return new Product();
+    }
+
+    @Override
+    public void deleteProduct(Long id) {
+
+    }
+
+    @Override
+    public Product addNewProduct(Product product) {
+        return null;
+    }
 
     Product convertFakeStoreToProduct(FakeStoreDTO fakeStoreDTO)
     {

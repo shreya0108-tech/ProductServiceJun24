@@ -10,7 +10,7 @@ import lombok.Setter;
 public class BaseModel {
     @Id     //PK
     @GeneratedValue(strategy = GenerationType.IDENTITY)     //auto-increment
-    private long id;
+    private Long id;
 }
 
 /*

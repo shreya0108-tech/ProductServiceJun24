@@ -7,6 +7,7 @@ import com.scaler.productservicejune24.services.FakeStoreService;
 import com.scaler.productservicejune24.services.ProductService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,7 +21,7 @@ import java.util.List;
 public class ProductController {
     //FakeStoreService fakeStoreService = new FakeStoreService();
     ProductService productService;
-    ProductController(ProductService ps) {
+    ProductController(@Qualifier("selfProductService") ProductService ps) {
         //this.productService = new FakeStoreService();
         this.productService = ps;
     }
@@ -54,16 +55,28 @@ public class ProductController {
 
     //http://localhost:8080/product/1
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") int id, @RequestBody FakeStoreDTO product)
+    public Product updateProduct(@PathVariable("id") long id, @RequestBody Product product)
     {
-        return updateProduct(id,product);
+        return productService.updateProduct(id,product);
     }
 
     //http://localhost:8080/product/1
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable int id, @RequestBody Product product)
+    public Product replaceProduct(@PathVariable long id, @RequestBody Product product)
     {
-        return replaceProduct(id,product);
+        return productService.replaceProduct(id,product);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteProduct(@PathVariable long id)
+    {
+        productService.deleteProduct(id);
+    }
+
+    @PostMapping
+    public Product addNewProduct(@RequestBody Product product)
+    {
+        return productService.addNewProduct(product);
     }
 
     //if we want to handle the exception using exception handler, we can do it in the
