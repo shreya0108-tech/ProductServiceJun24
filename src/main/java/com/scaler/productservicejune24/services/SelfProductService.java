@@ -5,6 +5,7 @@ import com.scaler.productservicejune24.Models.Product;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import com.scaler.productservicejune24.repositories.CategoryRepository;
 import com.scaler.productservicejune24.repositories.ProductRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

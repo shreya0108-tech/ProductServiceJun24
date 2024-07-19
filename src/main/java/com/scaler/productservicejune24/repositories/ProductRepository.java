@@ -1,7 +1,9 @@
 package com.scaler.productservicejune24.repositories;
 
 import com.scaler.productservicejune24.Models.Product;
+import com.scaler.productservicejune24.projections.ProductWithIdAndTitle;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -38,6 +40,16 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
     List<Product> findProductByTitlesAndPriceGreaterThan(String word, Double price);
 
     List<Product> findProductByTitlesContainsOrderById(String word);
+
+    //HQL
+    @Query("select p.id as id, p.titles as title from Product p where p.id = :id")
+    List<ProductWithIdAndTitle> RandomSearch(int id);
+
+    //SQL
+    //We could return List<ProductWithIdAndTitle> also if only a few columns were to be returned from
+    //the Select clause
+    @Query(value = "select * from product",nativeQuery = true)
+    List<Product> RandomSearchUsingSql();
 }
 
 /*
