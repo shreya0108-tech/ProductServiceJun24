@@ -44,13 +44,53 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
-        return null;
+    public Product updateProduct(Long id, Product product) throws ProductNotFoundException {
+        Optional<Product> prOpt = productRepository.findById(id);
+        if(prOpt.isEmpty())
+        {
+            throw new ProductNotFoundException("Product with id "+id+" doesn't exist");
+        }
+        Product productobj = prOpt.get();
+        if(product.getPrice() != null)
+        {
+            productobj.setPrice(product.getPrice());
+        }
+        if(product.getLabel() != null) {
+            productobj.setLabel(product.getLabel());
+        }
+        return productRepository.save(productobj);
     }
 
     @Override
-    public Product replaceProduct(Long id, Product product) {
-        return null;
+    public Product replaceProduct(Long id, Product product) throws ProductNotFoundException {
+        Optional<Product> propt = productRepository.findById(id);
+        if(propt.isEmpty())
+        {
+            throw new ProductNotFoundException("Product with id "+id+" doesn't exist");
+        }
+        Product probj = propt.get();
+        if(product.getTitles() != null)
+        {
+            probj.setTitles(product.getTitles());
+        }
+        if(product.getPrice() != null)
+        {
+            probj.setPrice(product.getPrice());
+        }
+        if(product.getDescription() != null)
+        {
+            probj.setDescription(product.getDescription());
+        }
+        Category cat = product.getCategory();
+        if(cat.getId() == null )
+        {
+            cat = categoryRepository.save(cat);
+            probj.setCategory(cat);
+        }
+        if(product.getLabel() != null) {
+            probj.setLabel(product.getLabel());
+        }
+        return productRepository.save(probj);
     }
 
     @Override

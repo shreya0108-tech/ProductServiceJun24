@@ -55,15 +55,13 @@ public class ProductController {
 
     //http://localhost:8080/product/1
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") long id, @RequestBody Product product)
-    {
+    public Product updateProduct(@PathVariable("id") long id, @RequestBody Product product) throws ProductNotFoundException {
         return productService.updateProduct(id,product);
     }
 
     //http://localhost:8080/product/1
     @PutMapping("/{id}")
-    public Product replaceProduct(@PathVariable long id, @RequestBody Product product)
-    {
+    public Product replaceProduct(@PathVariable long id, @RequestBody Product product) throws ProductNotFoundException {
         return productService.replaceProduct(id,product);
     }
 
