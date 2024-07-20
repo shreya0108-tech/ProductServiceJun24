@@ -44,6 +44,7 @@ public class SelfProductService implements ProductService {
         return productRepository.findAll();
     }
 
+    //PATCH
     @Override
     public Product updateProduct(Long id, Product product) throws ProductNotFoundException {
         Optional<Product> prOpt = productRepository.findById(id);
@@ -62,6 +63,7 @@ public class SelfProductService implements ProductService {
         return productRepository.save(productobj);
     }
 
+    //PUT
     @Override
     public Product replaceProduct(Long id, Product product) throws ProductNotFoundException {
         Optional<Product> propt = productRepository.findById(id);
@@ -94,19 +96,21 @@ public class SelfProductService implements ProductService {
         return productRepository.save(probj);
     }
 
+    //DELETE
     @Override
     public void deleteProduct(Long id) {
         productRepository.deleteById(id);
     }
 
+    //POST
     @Override
     public Product addNewProduct(Product product) {
-        Category cat = product.getCategory();
-        if(cat.getId() == null )
-        {
-            cat = categoryRepository.save(cat);
-            product.setCategory(cat);
-        }
+//        Category cat = product.getCategory();
+//        if(cat.getId() == null )
+//        {
+//            cat = categoryRepository.save(cat);
+//            product.setCategory(cat);
+//        }
         return productRepository.save(product);
     }
 
