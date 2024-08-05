@@ -7,6 +7,7 @@ import com.scaler.productservicejune24.repositories.CategoryRepository;
 import com.scaler.productservicejune24.repositories.ProductRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
@@ -43,9 +44,11 @@ public class SelfProductService implements ProductService {
 
     @Override
     public Page<Product> getAllProduct(int pageNumber, int pageSize) {
+        /*Sort.by("price").ascending().and(Sort.by("Title").ascending().
+        and(Sort.by("Quantity").ascending()))*/
         return productRepository.findAll(
-                PageRequest.of(pageNumber, pageSize)
-        );
+                PageRequest.of(pageNumber, pageSize,
+                        Sort.by("price").ascending()));
     }
 
     //PATCH
