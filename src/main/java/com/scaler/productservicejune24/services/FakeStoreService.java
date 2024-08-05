@@ -5,6 +5,8 @@ import com.scaler.productservicejune24.Models.Product;
 import com.scaler.productservicejune24.configurations.ApplicationConfig;
 import com.scaler.productservicejune24.dtos.FakeStoreDTO;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -43,7 +45,7 @@ public class FakeStoreService implements  ProductService{
     }
 
     @Override
-    public List<Product> getAllProduct() {
+    public Page<Product> getAllProduct(int pageNumber, int pageSize) {
         FakeStoreDTO[] fakeStoreDTO =
                 restTemplate.getForObject(
                         "https://fakestoreapi.com/products",
@@ -54,7 +56,7 @@ public class FakeStoreService implements  ProductService{
         {
             products.add(convertFakeStoreToProduct(fakeStoreDTO1));
         }
-        return products;
+        return new PageImpl<>(products);
     }
 
     @Override

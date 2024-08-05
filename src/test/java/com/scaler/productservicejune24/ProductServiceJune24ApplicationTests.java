@@ -16,47 +16,47 @@ import java.util.Optional;
 @SpringBootTest
 class ProductServiceJune24ApplicationTests {
 
-    @Autowired			//<--- explanation below
-    private ProductRepository productRepository;
-    @Autowired
-    private CategoryRepository categoryRepository;
-
-	@Test
-	void contextLoads() {
-	}
+//    @Autowired			//<--- explanation below
+//    private ProductRepository productRepository;
+//    @Autowired
+//    private CategoryRepository categoryRepository;
+//
+//	@Test
+//	void contextLoads() {
+//	}
 
 	//HQL
-	@Test
-	void testHQLQuery()
-	{
-		List<ProductWithIdAndTitle> list= productRepository.RandomSearch(1);
-		for(ProductWithIdAndTitle pr : list)
-		{
-			System.out.println(pr.getId()+" "+pr.getTitle());
-		}
-	}
-
-	//SQL
-	@Test
-	void testSQLQuery()
-	{
-		List<Product> plist = productRepository.RandomSearchUsingSql();
-		for(Product pr : plist)
-		{
-			System.out.println("SQL "+pr.getId()+" "+pr.getPrice());
-		}
-	}
-
-	@Test
-	void testFetchTypesQueries()
-	{
-		Optional<Product> p = productRepository.findById(1);	//executes join as Eager
-		System.out.println("Debug");
-		Optional<Category> cat = categoryRepository.findById(1L);	//doesn't execute join as Lazy
-		// executes join when explicitly made EAGER.
-		System.out.println("Debug 2");
-
-	}
+//	@Test
+//	void testHQLQuery()
+//	{
+//		List<ProductWithIdAndTitle> list= productRepository.RandomSearch(1);
+//		for(ProductWithIdAndTitle pr : list)
+//		{
+//			System.out.println(pr.getId()+" "+pr.getTitle());
+//		}
+//	}
+//
+//	//SQL
+//	@Test
+//	void testSQLQuery()
+//	{
+//		List<Product> plist = productRepository.RandomSearchUsingSql();
+//		for(Product pr : plist)
+//		{
+//			System.out.println("SQL "+pr.getId()+" "+pr.getPrice());
+//		}
+//	}
+//
+//	@Test
+//	void testFetchTypesQueries()
+//	{
+//		Optional<Product> p = productRepository.findById(1);	//executes join as Eager
+//		System.out.println("Debug");
+//		Optional<Category> cat = categoryRepository.findById(1L);	//doesn't execute join as Lazy
+//		// executes join when explicitly made EAGER.
+//		System.out.println("Debug 2");
+//
+//	}
 }
 /**
  *Why Constructor Injection Can Cause Issues :

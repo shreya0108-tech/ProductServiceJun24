@@ -5,6 +5,8 @@ import com.scaler.productservicejune24.Models.Product;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import com.scaler.productservicejune24.repositories.CategoryRepository;
 import com.scaler.productservicejune24.repositories.ProductRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
@@ -40,8 +42,10 @@ public class SelfProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProduct() {
-        return productRepository.findAll();
+    public Page<Product> getAllProduct(int pageNumber, int pageSize) {
+        return productRepository.findAll(
+                PageRequest.of(pageNumber, pageSize)
+        );
     }
 
     //PATCH
