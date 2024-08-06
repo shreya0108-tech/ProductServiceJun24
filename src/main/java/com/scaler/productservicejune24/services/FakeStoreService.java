@@ -7,6 +7,7 @@ import com.scaler.productservicejune24.dtos.FakeStoreDTO;
 import com.scaler.productservicejune24.exceptions.ProductNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
@@ -23,8 +24,10 @@ import java.util.List;
 public class FakeStoreService implements  ProductService{
 
     RestTemplate restTemplate;
-    public FakeStoreService(RestTemplate rst) {
+    RedisTemplate redisTemplate;
+    public FakeStoreService(RestTemplate rst,RedisTemplate redisTemplate) {
         this.restTemplate = rst;
+        this.redisTemplate = redisTemplate;
     }
 
     @Override
@@ -32,6 +35,13 @@ public class FakeStoreService implements  ProductService{
         //throw new ArithmeticException("Something went wrong");
         //throw new ArrayIndexOutOfBoundsException("Out of Bounds");
         //call fakestore service to fetch product with given id
+        Product p = (Product) redisTemplate.opsForHash().get("Products", "Product_"+productId);
+        //cache hit
+        if(p != null)
+        {
+            return p;
+        }
+        //cache miss
         FakeStoreDTO fakeStoreDTO = restTemplate.getForObject(
                 "https://fakestoreapi.com/products/"+productId,//+"/",
                 FakeStoreDTO.class
@@ -41,7 +51,11 @@ public class FakeStoreService implements  ProductService{
             throw new ProductNotFoundException("Product is not available with id "+
                     productId);
         }
-        return convertFakeStoreToProduct(fakeStoreDTO);
+        p = convertFakeStoreToProduct(fakeStoreDTO);
+        //putting into cache
+        redisTemplate.opsForHash().put("Products","Product_"+productId,
+                p);
+        return p;
     }
 
     @Override

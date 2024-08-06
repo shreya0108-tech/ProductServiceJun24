@@ -4,10 +4,13 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Getter
 @Setter
 @MappedSuperclass
-public class BaseModel {
+public class BaseModel implements Serializable {
+    //implements serializable for Redis cache
     @Id     //PK
     @GeneratedValue(strategy = GenerationType.IDENTITY)     //auto-increment
     private Long id;
